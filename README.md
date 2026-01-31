@@ -96,4 +96,28 @@ Start the Streamlit app:
 Open in browser:
 ```http://localhost:8501```
 
+---
+
+📖 How to Use
+
+Upload your resume (PDF)
+Paste job description
+Click Analyze
+View:
+ATS Score
+Matched Skills
+Missing Skills
+Suggestions
+Click Improve My Resume for optimized version
+
+Export report using Export to PDF
+📑 Output Files
+
+Analysis history stored in:
+data/history.csv
+
+PDF reports saved in:
+data/
+
+
 
