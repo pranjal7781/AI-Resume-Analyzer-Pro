@@ -59,7 +59,8 @@ AI-Resume-Analyzer/
 
 ### 1️⃣ Clone the Repository
 
-```bash
+```
 git clone https://github.com/pranjal7781/AI-Resume-Analyzer.git
 cd AI-Resume-Analyzer
+
 
