@@ -11,35 +11,42 @@ from utils.exporter import generate_pdf
 from analyzer.improver import improve_resume
 
 
-# ---------------- CONFIG ----------------
+# -------------------------------------------------
+# Session State (Privacy First)
+# -------------------------------------------------
+
+if "resume_text" not in st.session_state:
+    st.session_state.resume_text = None
+
+if "job_desc" not in st.session_state:
+    st.session_state.job_desc = None
+
+if "improved_resume" not in st.session_state:
+    st.session_state.improved_resume = None
+
+if "last_result" not in st.session_state:
+    st.session_state.last_result = None
+
+if "history" not in st.session_state:
+    st.session_state.history = []
+
+
+# -------------------------------------------------
+# App Setup
+# -------------------------------------------------
 
 st.set_page_config(
     page_title="AI Resume Analyzer Pro",
     layout="wide"
 )
 
-DATA_DIR = "data"
-HISTORY_FILE = f"{DATA_DIR}/history.csv"
-
-os.makedirs(DATA_DIR, exist_ok=True)
-
-
-# ---------------- SESSION STATE ----------------
-
-if "improved_resume" not in st.session_state:
-    st.session_state.improved_resume = ""
-
-if "last_result" not in st.session_state:
-    st.session_state.last_result = None
-
-
-# ---------------- UI ----------------
-
 st.title("🚀 AI Resume Analyzer Pro")
 st.caption("Analyze your resume against job descriptions using AI")
 
 
-# ---------------- SIDEBAR ----------------
+# -------------------------------------------------
+# Sidebar
+# -------------------------------------------------
 
 st.sidebar.header("Upload")
 
@@ -53,72 +60,57 @@ job_desc = st.sidebar.text_area("Job Description")
 analyze_btn = st.sidebar.button("Analyze")
 
 
-# ---------------- HISTORY ----------------
+# -------------------------------------------------
+# Analyze Logic
+# -------------------------------------------------
 
-HISTORY_COLUMNS = ["date", "job_desc", "score", "matched", "missing"]
+if analyze_btn and resume_file and job_desc:
 
-if os.path.exists(HISTORY_FILE):
+    with st.spinner("Analyzing resume..."):
 
-    try:
-        history_df = pd.read_csv(HISTORY_FILE)
+        # Extract text
+        resume_text = extract_text(resume_file)
 
-    except:
-        history_df = pd.DataFrame(columns=HISTORY_COLUMNS)
+        # Save in session
+        st.session_state.resume_text = resume_text
+        st.session_state.job_desc = job_desc
 
-else:
-    history_df = pd.DataFrame(columns=HISTORY_COLUMNS)
+        # AI Analysis
+        ai_raw = analyze(resume_text, job_desc)
+        result = parse_ai_output(ai_raw)
 
+        score = result.get("score", 0)
+        matched = result.get("matched", [])
+        missing = result.get("missing", [])
+        summary = result.get("summary", "")
+        suggestions = result.get("suggestions", [])
 
-# ---------------- ANALYZE ----------------
+        # Save last result
+        st.session_state.last_result = {
+            "score": score,
+            "matched": matched,
+            "missing": missing,
+            "summary": summary,
+            "suggestions": suggestions
+        }
 
-if analyze_btn:
+        # Save private session history
+        new_row = {
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "job_desc": job_desc[:200],
+            "score": score,
+            "matched": ", ".join(matched),
+            "missing": ", ".join(missing)
+        }
 
-    if not resume_file or not job_desc:
+        st.session_state.history.append(new_row)
 
-        st.warning("Upload resume and enter job description")
-
-    else:
-
-        with st.spinner("Analyzing resume..."):
-
-            # Extract
-            resume_text = extract_text(resume_file)
-
-            # AI Analysis
-            ai_raw = analyze(resume_text, job_desc)
-            result = parse_ai_output(ai_raw)
-
-            score = result.get("score", 0)
-            matched = result.get("matched", [])
-            missing = result.get("missing", [])
-            summary = result.get("summary", "")
-            suggestions = result.get("suggestions", [])
-
-
-            # Save session
-            st.session_state.last_result = result
-
-
-            # Save history
-            new_row = {
-                "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "job_desc": job_desc[:200],
-                "score": score,
-                "matched": ",".join(matched),
-                "missing": ",".join(missing)
-            }
-
-            history_df = pd.concat(
-                [history_df, pd.DataFrame([new_row])],
-                ignore_index=True
-            )
-
-            history_df.to_csv(HISTORY_FILE, index=False)
-
-            st.success("Analysis completed!")
+        st.success("Analysis completed!")
 
 
-# ---------------- SHOW RESULT ----------------
+# -------------------------------------------------
+# Display Result
+# -------------------------------------------------
 
 if st.session_state.last_result:
 
@@ -130,50 +122,50 @@ if st.session_state.last_result:
     summary = data["summary"]
     suggestions = data["suggestions"]
 
-
-    st.divider()
-
-    st.subheader("Match Score")
+    st.subheader("📊 Match Score")
     st.metric("ATS Score", f"{score}%")
-
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("Matched Skills")
+        st.subheader("✅ Matched Skills")
         st.write(matched)
 
     with col2:
-        st.subheader("Missing Skills")
+        st.subheader("❌ Missing Skills")
         st.write(missing)
 
-
-    st.subheader("Summary")
+    st.subheader("📝 Summary")
     st.info(summary)
 
-
-    st.subheader("Suggestions")
+    st.subheader("💡 Suggestions")
 
     for s in suggestions:
         st.write("•", s)
 
 
-    # ---------------- IMPROVER ----------------
+    # -------------------------------
+    # Resume Improver
+    # -------------------------------
 
     st.divider()
     st.subheader("✨ AI Resume Improver")
 
-
     if st.button("Improve My Resume"):
 
-        with st.spinner("Improving resume..."):
+        if st.session_state.resume_text and st.session_state.job_desc:
 
-            improved = improve_resume(
-                extract_text(resume_file),
-                job_desc
-            )
+            with st.spinner("Improving resume..."):
 
-            st.session_state.improved_resume = improved
+                improved = improve_resume(
+                    st.session_state.resume_text,
+                    st.session_state.job_desc
+                )
+
+                st.session_state.improved_resume = improved
+
+        else:
+            st.warning("Please analyze resume first.")
 
 
     if st.session_state.improved_resume:
@@ -187,7 +179,9 @@ if st.session_state.last_result:
         )
 
 
-    # ---------------- CHART ----------------
+    # -------------------------------
+    # Chart
+    # -------------------------------
 
     fig, ax = plt.subplots()
 
@@ -201,13 +195,20 @@ if st.session_state.last_result:
     st.pyplot(fig)
 
 
-# ---------------- EXPORT ----------------
+# -------------------------------------------------
+# Export PDF
+# -------------------------------------------------
 
-if st.session_state.last_result:
+st.divider()
 
-    if st.button("📄 Export to PDF"):
+if st.button("📄 Export to PDF"):
 
-        data = st.session_state.last_result
+    data = st.session_state.last_result
+
+    if not data:
+        st.warning("Please analyze resume first.")
+
+    else:
 
         path = generate_pdf(
             data["score"],
@@ -227,18 +228,21 @@ if st.session_state.last_result:
             )
 
 
-# ---------------- HISTORY TABLE ----------------
+# -------------------------------------------------
+# Private History (Session Only)
+# -------------------------------------------------
 
 st.divider()
+st.subheader("📜 Previous Analyses (This Session Only)")
 
-st.subheader("Previous Analyses")
+if st.session_state.history:
 
-if not history_df.empty:
+    df = pd.DataFrame(st.session_state.history)
 
     st.dataframe(
-        history_df.sort_values("date", ascending=False),
+        df.sort_values("date", ascending=False),
         use_container_width=True
     )
 
 else:
-    st.info("No history yet")
+    st.info("No analyses in this session.")
