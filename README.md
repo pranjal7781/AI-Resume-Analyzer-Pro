@@ -33,6 +33,7 @@ AI Resume Analyzer Pro is a web-based application built with Streamlit that anal
 
 ## 📂 Project Structure
 
+```
 AI-Resume-Analyzer/
 │
 ├── app.py
@@ -51,8 +52,7 @@ AI-Resume-Analyzer/
 │
 └── data/
   └── history.csv
-
-
+```
 ---
 
 ## ⚙️ Installation & Setup
