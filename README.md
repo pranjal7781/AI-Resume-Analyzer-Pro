@@ -63,6 +63,7 @@ AI-Resume-Analyzer/
 ```cd AI-Resume-Analyzer```
 
 ### 2️⃣ Create Virtual Environment (Recommended)
+
 ```python -m venv venv```
 
 Activate:
@@ -70,4 +71,15 @@ Activate:
 For Window:  ```venv\Scripts\activate```
 
 For Linux / Mac: ```source venv/bin/activate```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```pip install -r requirements.txt```
+
+---
+
+###4️⃣ Setup Environment Variables
+
 
