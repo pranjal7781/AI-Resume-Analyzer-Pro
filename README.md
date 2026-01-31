@@ -59,8 +59,15 @@ AI-Resume-Analyzer/
 
 ### 1️⃣ Clone the Repository
 
-```
-git clone https://github.com/pranjal7781/AI-Resume-Analyzer.git
-cd AI-Resume-Analyzer
+```git clone https://github.com/pranjal7781/AI-Resume-Analyzer.git```
+```cd AI-Resume-Analyzer```
 
+### 2️⃣ Create Virtual Environment (Recommended)
+```python -m venv venv```
+
+Activate:
+
+For Window:  ```venv\Scripts\activate```
+
+For Linux / Mac: ```source venv/bin/activate```
 
