@@ -100,8 +100,8 @@ Open in browser:
 
 📖 How to Use
 
-Upload your resume (PDF)
-Paste job description
+Upload your resume (PDF) 
+Paste job description 
 Click Analyze
 View:
 ATS Score
