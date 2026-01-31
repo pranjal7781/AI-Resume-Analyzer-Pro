@@ -82,4 +82,18 @@ For Linux / Mac: ```source venv/bin/activate```
 
 ###4️⃣ Setup Environment Variables
 
+GROQ_API_KEY=your_api_key_here
+```Get API key from: https://console.groq.com```
+
+---
+
+▶️ Run the Application
+
+Start the Streamlit app: 
+
+```streamlit run app.py```
+
+Open in browser:
+```http://localhost:8501```
+
 
