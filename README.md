@@ -3,7 +3,7 @@
 AI Resume Analyzer Pro is a web-based application built with Streamlit that analyzes resumes against job descriptions using AI and ATS-style scoring. It provides skill matching, improvement suggestions, resume optimization, and downloadable PDF reports.
 
 --- 
-   
+
 ## ✨ Features
 
 - 📄 Upload resume in PDF format 
