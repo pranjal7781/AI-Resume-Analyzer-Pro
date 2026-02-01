@@ -6,7 +6,7 @@ AI Resume Analyzer Pro is a web-based application built with Streamlit that anal
    
 ## ✨ Features
 
-- 📄 Upload resume in PDF format
+- 📄 Upload resume in PDF format 
 - 📝 Paste job description
 - 🤖 AI-based resume analysis
 - 📊 ATS-style match score
