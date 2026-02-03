@@ -14,7 +14,7 @@ AI Resume Analyzer Pro is a web-based application built with Streamlit that anal
 - 📈 Visual skill comparison chart
 - ✨ AI-powered resume improvement
 - 🗂 Analysis history tracking
-- 📑 Export analysis report as PDF
+- 📑 Export analysis report directly into PDF
 
 ---
 
