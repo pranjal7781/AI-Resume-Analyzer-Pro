@@ -83,7 +83,7 @@ For Linux / Mac: ```source venv/bin/activate```
 ###4️⃣ Setup Environment Variables
 
 GROQ_API_KEY=your_api_key_here
-```Get API key from: https://console.groq.com```
+```Get API key from: https://console.groq.com``` 
 
 ---
 
