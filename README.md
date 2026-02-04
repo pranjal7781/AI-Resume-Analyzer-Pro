@@ -117,7 +117,4 @@ Analysis history stored in:
 data/history.csv
 
 PDF reports saved in:
-data/ folder
-
-
-
+data/
