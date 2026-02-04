@@ -68,7 +68,7 @@ AI-Resume-Analyzer/
 
 Activate:
 
-For Window: use  ```venv\Scripts\activate```
+For Window:  ```venv\Scripts\activate```
 
 For Linux / Mac: ```source venv/bin/activate```
 
