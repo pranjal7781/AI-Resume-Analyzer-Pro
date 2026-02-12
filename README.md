@@ -19,7 +19,7 @@ live here ``https://ai-resume-analyzer-pro.streamlit.app/``
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Tech Stack 
 
 - Python
 - Streamlit
