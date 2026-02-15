@@ -21,7 +21,7 @@ live here ``https://ai-resume-analyzer-pro.streamlit.app/``
 
 ## 🛠 Tech Stack 
 
-- Python
+- Python  
 - Streamlit
 - Pandas
 - Matplotlib
