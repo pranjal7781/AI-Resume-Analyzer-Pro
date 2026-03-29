@@ -7,7 +7,7 @@ live here ``https://ai-resume-analyzer-pro.streamlit.app/``
 
 ## ✨ Features 
 
-- 📄 Upload resume in PDF format 
+- 📄 Upload resume in PDF format  
 - 📝 Paste job description
 - 🤖 AI-based resume analysis
 - 📊 ATS-style match score
