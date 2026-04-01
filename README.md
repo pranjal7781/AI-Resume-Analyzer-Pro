@@ -4,7 +4,7 @@ AI Resume Analyzer Pro is a web-based application built with Streamlit that anal
   
 ---    
 live here ``https://ai-resume-analyzer-pro.streamlit.app/``   
-
+ 
 ## ✨ Features 
   
 - 📄 Upload resume in PDF format  
